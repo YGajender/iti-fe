@@ -32,7 +32,7 @@ let tx = 0;
               <div className='user-info'>
                 <img src={user_1} alt='' />
                 <div>
-                  <h3>Nischal Maharjan</h3>
+                  <h3>GAjender Yadav</h3>
                   <span>Nischal Technologies, Australia </span>
                 </div>
               </div>
