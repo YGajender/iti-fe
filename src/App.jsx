@@ -1,6 +1,7 @@
 import { useState } from "react"
 import About from "./components/ABout/About"
 import Campus from "./components/Campus/Campus"
+import Certifecate from "./components/Certificate/Certifecate"
 import Contact from "./components/Contact/Contact"
 import Footer from "./components/Footer/Footer"
 import Hero from "./components/Hero/Hero"
@@ -9,7 +10,7 @@ import Programs from "./components/Programs/Programs"
 import Testimonials from "./components/Testimonials/Testimonials"
 import Title from "./components/Title/Title"
 import Videoplayer from "./components/VideoPlayer/Videoplayer"
-
+//Certifecate
 
 const App = () => {
   const [playState,setPlayState]=useState(false)
@@ -22,6 +23,8 @@ const App = () => {
     <Title subTitle ='Our Programs' title='What we offer'/>
       <Programs/>
       <About setPlayState={setPlayState}/>
+      <Title subTitle ='Certifecate' title='Certifecate Photos'/>
+      <Certifecate/>
       <Title subTitle ='Gallery' title='Campus Photos'/>
       <Campus/>
       <Title subTitle ='Testimonials' title='What Students Say'/>

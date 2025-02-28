@@ -46,6 +46,11 @@ const Navbar = () => {
           </Link>
         </li>
         <li>
+          <Link to='testimonials' smooth={true} offset={-260} duration={500}>
+            Certificate
+          </Link>
+        </li>
+        <li>
           <Link
             to='contact'
             smooth={true}

@@ -4,32 +4,59 @@ import mail_icon from '../../assets/mail-icon.png'
 import phone_icon from '../../assets/phone-icon.png'
 import location_icon from '../../assets/location-icon.png'
 import white_arrow from '../../assets/white-arrow.png'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+
 const Contact = () => {
-  const [result, setResult] = React.useState("");
+  const [result, setResult] = useState("");
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    message: ""
+  });
+
+  // Load stored data when the component mounts
+  useEffect(() => {
+    const storedData = localStorage.getItem("contactForm");
+    if (storedData) {
+      setFormData(JSON.parse(storedData));
+    }
+  }, []);
+
+  // Handle input changes and update localStorage
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    const updatedFormData = { ...formData, [name]: value };
+    setFormData(updatedFormData);
+    localStorage.setItem("contactForm", JSON.stringify(updatedFormData));
+  };
 
   const onSubmit = async (event) => {
     event.preventDefault();
     setResult("Sending....");
-    const formData = new FormData(event.target);
 
-    formData.append("access_key", "19faf98e-41d8-42ea-8acf-0ff49e3043e4");
+    const formDataToSend = new FormData();
+    formDataToSend.append("access_key", "19faf98e-41d8-42ea-8acf-0ff49e3043e4");
+    formDataToSend.append("name", formData.name);
+    formDataToSend.append("phone", formData.phone);
+    formDataToSend.append("message", formData.message);
 
     const response = await fetch("https://api.web3forms.com/submit", {
       method: "POST",
-      body: formData
+      body: formDataToSend
     });
 
     const data = await response.json();
 
     if (data.success) {
       setResult("Form Submitted Successfully");
-      event.target.reset();
+      setFormData({ name: "", phone: "", message: "" });
+      localStorage.removeItem("contactForm");
     } else {
       console.log("Error", data);
       setResult(data.message);
     }
   };
+
   return (
     <div className='contact'>
       <div className='contact-col'>
@@ -37,8 +64,8 @@ const Contact = () => {
           Send us a message <img src={message_icon} alt='' />
         </h3>
         <p>
-          Feel free to reach out through contact form or find our contact
-          information below.{' '}
+          Feel free to reach out through the contact form or find our contact
+          information below.
         </p>
         <ul>
           <li>
@@ -61,6 +88,8 @@ const Contact = () => {
           <input
             type='text'
             name='name'
+            value={formData.name}
+            onChange={handleInputChange}
             placeholder='Enter your name'
             required
           />
@@ -68,6 +97,8 @@ const Contact = () => {
           <input
             type='tel'
             name='phone'
+            value={formData.phone}
+            onChange={handleInputChange}
             placeholder='Enter your Mobile number'
             required
           />
@@ -75,6 +106,8 @@ const Contact = () => {
           <textarea
             name='message'
             rows={6}
+            value={formData.message}
+            onChange={handleInputChange}
             placeholder='Enter your message'
             required
           ></textarea>
