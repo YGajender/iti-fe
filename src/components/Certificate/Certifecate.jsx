@@ -12,7 +12,6 @@ const handleDownload = () => {
   document.body.removeChild(link);
 };
 const Certifecate = () => {
-  
 
   return (
     <div className="campus">
